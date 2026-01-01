@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Battleship Game</title>
+</head>
+<body>
+    <h1>Battleship – Browser Mode</h1>
+
+    <h2>Enemy Fleet</h2>
+    <table border="1">
+        {% for r in range(game.size) %}
+        <tr>
+            <td><strong>{{ chr(65 + r) }}</strong></td>
+            {% for c in range(game.size) %}
+                <td>{{ game.enemy_view[r][c] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Fire a Shot</h2>
+    <form method="post" action="{{ url_for('fire') }}">
+        <input name="position" placeholder="A1" required>
+        <button type="submit">Fire</button>
+    </form>
+
+    <p>{{ game.player_msg }}</p>
+    <p>{{ game.enemy_msg }}</p>
+</body>
+</html>
