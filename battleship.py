@@ -397,6 +397,58 @@ class BattleshipGame:
         self.player_board[r][c] = MISS
         return f"💦 Enemy fires at {pos} — Torpedo missed, you evaded!"
 
+    def player_turn(self, guess: str):
+        """
+        Web-compatible player turn.
+        Accepts a position like 'A1' instead of using input().
+        """
+        self.player_msg = ""
+
+        guess = guess.strip().upper()
+
+        if len(guess) < 2:
+            self.player_msg = "❌ Format must be Letter+Number (e.g., A1)."
+            return
+
+        row_letter, digits = guess[0], guess[1:]
+
+        if not digits.isdigit():
+            self.player_msg = "❌ Column must be a number."
+            return
+
+        r = ord(row_letter) - 65
+        c = int(digits) - 1
+
+        if not (0 <= r < self.size and 0 <= c < self.size):
+            self.player_msg = (
+                f"❌ Coordinates must be A–{chr(64 + self.size)} "
+                f"+ 1–{self.size}."
+            )
+            return
+
+        if self.enemy_view[r][c] in (MISS, HIT):
+            self.player_msg = "⚠️ Already tried that sector."
+            return
+
+        self.total_player_shots += 1
+
+        if (r, c) in self.enemy_ships:
+            self.enemy_view[r][c] = HIT
+            self.enemy_ships.remove((r, c))
+            self.player_msg = f"💥 Hit at {row_letter}{c + 1}!"
+        else:
+            self.enemy_view[r][c] = MISS
+            self.player_msg = f"💦 Miss at {row_letter}{c + 1}."
+
+    def enemy_turn(self):
+        """
+        Web-compatible enemy turn wrapper.
+        """
+        if not self.player_ships:
+            return
+
+        self.enemy_msg = self._enemy_turn()
+
     def _show_status(self, current_turn="Player"):
         """Show compact status bar and last turn results with colors."""
         enemy_left = len(self.enemy_ships)

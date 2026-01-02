@@ -34,10 +34,12 @@ def play_game():
     if game is None:
         return redirect(url_for("setup"))
 
+    letters = [chr(65 + i) for i in range(game.size)]
+
     return render_template(
         "game.html",
         game=game,
-        chr=chr  # allow chr() inside Jinja templates
+        letters=letters
     )
 
 
