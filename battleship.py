@@ -397,6 +397,16 @@ class BattleshipGame:
         self.player_board[r][c] = MISS
         return f"💦 Enemy fires at {pos} — Torpedo missed, you evaded!"
 
+    def enemy_turn(self):
+        """
+        Web-compatible enemy turn wrapper.
+        Flask route se call hota hai.
+        """
+        if not self.player_ships:
+            return
+
+        self.enemy_msg = self._enemy_turn()
+
     def player_turn(self, guess: str):
         """
         Web-compatible player turn.
@@ -404,7 +414,7 @@ class BattleshipGame:
         """
         self.player_msg = ""
 
-        guess = guess.strip().upper()
+        guess = (guess or "").strip().upper()
 
         if len(guess) < 2:
             self.player_msg = "❌ Format must be Letter+Number (e.g., A1)."
@@ -413,7 +423,7 @@ class BattleshipGame:
         row_letter, digits = guess[0], guess[1:]
 
         if not digits.isdigit():
-            self.player_msg = "❌ Column must be a number."
+            self.player_msg = "❌ Column must be a number (e.g., A1)."
             return
 
         r = ord(row_letter) - 65
@@ -439,15 +449,6 @@ class BattleshipGame:
         else:
             self.enemy_view[r][c] = MISS
             self.player_msg = f"💦 Miss at {row_letter}{c + 1}."
-
-    def enemy_turn(self):
-        """
-        Web-compatible enemy turn wrapper.
-        """
-        if not self.player_ships:
-            return
-
-        self.enemy_msg = self._enemy_turn()
 
     def _show_status(self, current_turn="Player"):
         """Show compact status bar and last turn results with colors."""
