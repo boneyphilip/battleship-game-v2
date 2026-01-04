@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Battleship{% endblock %}</title>
+
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: monospace;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    h1, h2, h3 {
+      color: #ffff00;
+      margin: 10px 0;
+    }
+
+    /* Rainbow title colors */
+    .ascii-title span { display:block; white-space: pre; font-weight: bold; }
+    .rainbow-red { color: #ff3333; }
+    .rainbow-magenta { color: #ff33ff; }
+    .rainbow-blue { color: #3399ff; }
+    .rainbow-cyan { color: #33ffff; }
+    .rainbow-green { color: #33ff66; }
+
+    .tagline { color: #33ffff; font-weight: bold; margin: 10px 0 20px; }
+
+    .box {
+      border: 1px solid #ffff00;
+      padding: 15px;
+      margin: 20px auto;
+      max-width: 900px;
+    }
+
+    .boards-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    table.board {
+      border-collapse: collapse;
+      margin: 0 auto;
+      background: #000;
+    }
+
+    table.board th, table.board td {
+      border: 1px solid #ffff00;
+      width: 28px;
+      height: 28px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    table.board th {
+      color: #33ffff;
+      font-weight: bold;
+    }
+
+    .status {
+      border: 1px solid #ffff00;
+      padding: 10px;
+      margin: 15px auto;
+      max-width: 900px;
+      color: #ffff00;
+      font-weight: bold;
+    }
+
+    .msg-player { color: #33ffff; margin-top: 10px; }
+    .msg-enemy { color: #ff33ff; margin-top: 10px; }
+
+    .fire-box {
+      border: 1px solid #ffff00;
+      padding: 15px;
+      margin: 20px auto;
+      max-width: 900px;
+    }
+
+    input[type="text"], input[type="number"] {
+      padding: 6px 8px;
+      font-size: 14px;
+      font-family: monospace;
+    }
+
+    button {
+      padding: 6px 12px;
+      font-size: 14px;
+      font-family: monospace;
+      border: 1px solid #ffff00;
+      background: #111;
+      color: #ffff00;
+      cursor: pointer;
+    }
+
+    button:hover { background: #222; }
+
+    .legend { color:#ffff00; margin-top: 20px; }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

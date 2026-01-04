@@ -1,31 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Battleship Game</title>
-</head>
-<body>
-    <h1>Battleship – Browser Mode</h1>
+{% extends "base.html" %}
 
+{% block title %}Battleship - Browser Mode{% endblock %}
+
+{% block content %}
+<h1>BATTLESHIPS</h1>
+
+<div class="status">
+  🎯 Turn: Player |
+  Enemy ships: {{ game.enemy_ships|length }} |
+  Your ships: {{ game.player_ships|length }}
+  <br/>
+  Shots — Player: {{ game.total_player_shots }} | Enemy: {{ game.total_enemy_shots }}
+</div>
+
+{% if game.player_msg %}
+  <div class="msg-player">💦 {{ game.player_msg }}</div>
+{% endif %}
+
+{% if game.enemy_msg %}
+  <div class="msg-enemy">💦 {{ game.enemy_msg }}</div>
+{% endif %}
+
+<div class="boards-wrap">
+  <div>
     <h2>Enemy Fleet</h2>
-    <table border="1">
-        {% for r in range(game.size) %}
-        <tr>
-            <td><strong>{{ chr(65 + r) }}</strong></td>
-            {% for c in range(game.size) %}
-                <td>{{ game.enemy_view[r][c] }}</td>
-            {% endfor %}
-        </tr>
+    <table class="board">
+      <tr>
+        <th></th>
+        {% for c in range(game.size) %}
+          <th>{{ c + 1 }}</th>
         {% endfor %}
+      </tr>
+
+      {% for r in range(game.size) %}
+      <tr>
+        <th>{{ chr(65 + r) }}</th>
+        {% for c in range(game.size) %}
+          <td>{{ game.enemy_view[r][c] }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
     </table>
+  </div>
 
-    <h2>Fire a Shot</h2>
-    <form method="post" action="{{ url_for('fire') }}">
-        <input name="position" placeholder="A1" required>
-        <button type="submit">Fire</button>
-    </form>
+  <div>
+    <h2>Your Fleet</h2>
+    <table class="board">
+      <tr>
+        <th></th>
+        {% for c in range(game.size) %}
+          <th>{{ c + 1 }}</th>
+        {% endfor %}
+      </tr>
 
-    <p>{{ game.player_msg }}</p>
-    <p>{{ game.enemy_msg }}</p>
-</body>
-</html>
+      {% for r in range(game.size) %}
+      <tr>
+        <th>{{ chr(65 + r) }}</th>
+        {% for c in range(game.size) %}
+          <td>{{ game.player_board[r][c] }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+
+<div class="fire-box">
+  <h3>Enter position (e.g., A1)</h3>
+
+  <form action="{{ url_for('fire') }}" method="POST">
+    <input type="text" name="position" placeholder="A1" required>
+    <button type="submit">Fire!</button>
+  </form>
+
+  <form action="{{ url_for('new_game') }}" method="POST" style="margin-top:12px;">
+    <button type="submit">New Game</button>
+  </form>
+</div>
+
+<div class="legend">
+  Legend: 💥=Hit  💦=Miss  🌊=Water  🚢=Player
+</div>
+
+{% endblock %}

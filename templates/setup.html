@@ -1,26 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Battleship Setup</title>
-</head>
-<body>
-    <h1>Battleship Game – Setup</h1>
+{% extends "base.html" %}
+{% block title %}Battleship - Command Center{% endblock %}
 
-    <form method="post">
-        <label>
-            Grid Size (8–15):
-            <input type="number" name="size" min="8" max="15" value="8">
-        </label>
-        <br><br>
+{% block content %}
+<div class="ascii-title">
+  <span class="rainbow-red">██████   █████  ████████ ████████ ██      ███████ ███████ ██   ██ ██ ██████  ███████</span>
+  <span class="rainbow-magenta">██   ██ ██   ██    ██       ██    ██      ██      ██      ██   ██ ██ ██   ██ ██     </span>
+  <span class="rainbow-blue">██████  ███████    ██       ██    ██      █████   ███████ ███████ ██ ██████  ███████</span>
+  <span class="rainbow-cyan">██   ██ ██   ██    ██       ██    ██      ██           ██ ██   ██ ██ ██           ██</span>
+  <span class="rainbow-green">██████  ██   ██    ██       ██    ███████ ███████ ███████ ██   ██ ██ ██      ███████</span>
+</div>
 
-        <label>
-            Number of Ships (1–5):
-            <input type="number" name="ships" min="1" max="5" value="3">
-        </label>
-        <br><br>
+<div class="tagline">⚓ Command Center Online — Prepare for Battle ⚓</div>
 
-        <button type="submit">Start Game</button>
-    </form>
-</body>
-</html>
+<div class="box">
+  <pre style="color:#33ff66; font-weight:bold; white-space:pre-wrap;">
+⣠
+⠀⠀⠰⠶⢿⡶⠦⠄
+⠀⢀⣀⣿⣿⣿⣿⣿⣿⡇⢀⠀⢀⡀⠀⣀⣀⣠⣀⣀⡀
+⠉⠻⠿⣿⣿⣿⣿⣿⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣶⣶⣾⣧⣤⣴⣆⣀⢀⣤⡄⠀⠀⣀⡀
+  </pre>
+</div>
+
+<div class="box">
+  <h2>Game Setup</h2>
+
+  <form method="POST" action="{{ url_for('setup') }}">
+    <label style="color:#33ffff;">Grid size (8–15):</label>
+    <input type="number" name="size" min="8" max="15" value="8" required>
+    <br/><br/>
+    <label style="color:#33ffff;">Number of ships (1–5):</label>
+    <input type="number" name="ships" min="1" max="5" value="3" required>
+    <br/><br/>
+    <button type="submit">Deploy Fleet</button>
+  </form>
+</div>
+{% endblock %}
